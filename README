@@ -1,0 +1,26 @@
+ControlByFiles
+==============
+
+At the moment all it can do for you is running rake tasks.
+To do that first setup a cronjob which crontab's entry looks like this:
+
+* * * * * cd /your/rails/root ; export RAILS_ENV=development; ruby vendor/plugins/control_by_files/lib/control_by_files.rb
+
+just adjust the absolute path to your Rails application and the environment in
+which you would like to run the "control by file script" in. Add it to your
+crontab with "crontab -e". Be aware of the fact, that this configuration will
+run the script every minute. This shouldn't be a problem, but maybe you would
+like it to run less often. Just edit the crontab line accordingly.
+
+Now just put a rake.txt in the tmp/ folder of your Rails application. This file
+can contain rake parameters. Any new line indicates a new rake run. E.g.:
+
+-T
+db:migrate
+
+will end in "rake -T" and "rake db:migrate" run after each other.
+The result of that will be printed back into the rake.txt file so that you can
+have a look at it.
+
+
+Copyright (c) 2009 Thorben Schröder & Jan Steinmetz, released under the MIT license
